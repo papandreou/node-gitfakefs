@@ -1,0 +1,30 @@
+{
+  "name": "gitfakefs",
+  "version": "0.0.0",
+  "description": "Emulate node.js' fs module on top of a git repository",
+  "main": "lib/GitFakeFs.js",
+  "devDependencies": {
+    "mocha": "=1.13.0",
+    "unexpected": "=0.1.1"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/papandreou/node-gitfakefs.git"
+  },
+  "keywords": [
+    "fs",
+    "git"
+  ],
+  "author": "Andreas Lind Petersen <andreas@one.com>",
+  "license": "BSD",
+  "dependencies": {
+    "memoizeasync": "=0.3.1",
+    "passerror": "0.0.2"
+  }
+}
