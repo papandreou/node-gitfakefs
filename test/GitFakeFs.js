@@ -12,7 +12,7 @@ describe('GitFakeFs', function () {
     describe('#readdir()', function () {
         it('should list the files in the most recent commit', function (done) {
             gitFakeFs.readdir('/', passError(done, function (results) {
-                expect(results, 'to equal', ['foo.txt']);
+                expect(results, 'to equal', ['foo.txt', 'subdir']);
                 done();
             }));
         });
@@ -30,6 +30,14 @@ describe('GitFakeFs', function () {
         gitFakeFs.readFile('/foo.txt', 'utf-8', passError(done, function (str) {
             expect(str, 'to be a string');
             expect(str, 'to equal', 'This is the second revision of foo.txt\n\nIt also has non-ASCII chars: æøÅ\n\nAnd some more text...\n');
+            done();
+        }));
+    });
+
+    it('should be able to load a file located in a sub-subdirectory', function (done) {
+        gitFakeFs.readFile('/subdir/subdir/bar.txt', 'utf-8', passError(done, function (str) {
+            expect(str, 'to be a string');
+            expect(str, 'to equal', 'The contents of bar.txt\n');
             done();
         }));
     });
