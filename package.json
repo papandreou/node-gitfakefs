@@ -5,7 +5,7 @@
   "main": "lib/GitFakeFs.js",
   "devDependencies": {
     "mocha": "=1.13.0",
-    "unexpected": "=0.1.1"
+    "unexpected": "=1.0.0"
   },
   "directories": {
     "test": "test"
