@@ -2,8 +2,8 @@ GitFakeFs
 =========
 
 Emulate (a so far very small subset of) node.js' `fs` module on top of
-a git repository. Point GitFakeFs at a git repository, and optionally
-a ref, and it'll give you back a `fs` implementation that gets its
+a local git repository. Point GitFakeFs at a git repository, and optionally
+a ref, and it'll give you back an `fs` implementation that gets its
 data from the repo.
 
 ```javascript
