@@ -24,6 +24,7 @@
   "author": "Andreas Lind Petersen <andreas@one.com>",
   "license": "BSD",
   "dependencies": {
+    "createerror": "=0.4.1",
     "memoizeasync": "=0.3.1",
     "nodegit": "=0.1.0",
     "passerror": "0.0.2"

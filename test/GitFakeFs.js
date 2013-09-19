@@ -20,6 +20,7 @@ describe('GitFakeFs', function () {
                         'symlinkToExecutable.sh',
                         'symlinkToFoo.txt',
                         'symlinkToNonExistentFile',
+                        'symlinkToSelf',
                         'symlinkToSubdir',
                         'symlinkToSymlinkToNonExistentFile'
                     ]);
@@ -116,6 +117,16 @@ describe('GitFakeFs', function () {
                     done();
                 }));
             });
+
+            it('should throw an ELOOP error for symlinkToSelf', function (done) {
+                gitFakeFs.stat('/symlinkToSelf', function (err) {
+                    expect(err, 'to be an', Error);
+                    expect(err.code, 'to equal', 'ELOOP');
+                    expect(err.errno, 'to equal', 51);
+                    expect(err.message, 'to equal', "Error: ELOOP, too many symbolic links encountered '/symlinkToSelf'");
+                    done();
+                });
+            });
         });
 
         describe('#lstat()', function () {
@@ -161,6 +172,16 @@ describe('GitFakeFs', function () {
                     expect(stats.isFile(), 'to be', false);
                     expect(stats.isDirectory(), 'to be', false);
                     expect(stats.isSymbolicLink(), 'to be', true);
+                    done();
+                }));
+            });
+
+            it('should report symlinkToSelf as a symbolic link', function (done) {
+                gitFakeFs.lstat('/symlinkToSelf', passError(done, function (stats) {
+                    expect(stats.isFile(), 'to be', false);
+                    expect(stats.isDirectory(), 'to be', false);
+                    expect(stats.isSymbolicLink(), 'to be', true);
+                    expect(stats.mode & 0111, 'to be falsy');
                     done();
                 }));
             });
