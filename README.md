@@ -19,6 +19,8 @@ Supported functions:
 
  * `readdir`
  * `readFile`
+ * `stat`
+ * `lstat`
 
 Installation
 ------------

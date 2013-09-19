@@ -4,44 +4,168 @@ var expect = require('unexpected'),
     GitFakeFs = require('../lib/GitFakeFs');
 
 describe('GitFakeFs', function () {
-    var gitFakeFs;
-    beforeEach(function () {
-        gitFakeFs = new GitFakeFs(Path.resolve(__dirname, 'testrepo.git'));
-    });
+    describe('pointed at a the most recent commit in testrepo.git', function () {
+        var gitFakeFs;
+        beforeEach(function () {
+            gitFakeFs = new GitFakeFs(Path.resolve(__dirname, 'testrepo.git'));
+        });
 
-    describe('#readdir()', function () {
-        it('should list the files in the most recent commit', function (done) {
-            gitFakeFs.readdir('/', passError(done, function (results) {
-                expect(results, 'to equal', ['foo.txt', 'subdir']);
-                done();
-            }));
+        describe('#readdir()', function () {
+            it('should list the files in the most recent commit', function (done) {
+                gitFakeFs.readdir('/', passError(done, function (results) {
+                    expect(results.sort(), 'to equal', [
+                        'executable.sh',
+                        'foo.txt',
+                        'subdir',
+                        'symlinkToExecutable.sh',
+                        'symlinkToFoo.txt',
+                        'symlinkToNonExistentFile',
+                        'symlinkToSubdir',
+                        'symlinkToSymlinkToNonExistentFile'
+                    ]);
+                    done();
+                }));
+            });
+        });
+
+        describe('#readFile()', function () {
+            it('should read the most recent version of foo.txt as a buffer', function (done) {
+                gitFakeFs.readFile('/foo.txt', passError(done, function (buf) {
+                    expect(buf, 'to be a', Buffer);
+                    expect(buf.toString('utf-8'), 'to equal', 'This is the second revision of foo.txt\n\nIt also has non-ASCII chars: æøÅ\n\nAnd some more text...\n');
+                    done();
+                }));
+            });
+
+            it('should read the most recent version of foo.txt as a string', function (done) {
+                gitFakeFs.readFile('/foo.txt', 'utf-8', passError(done, function (str) {
+                    expect(str, 'to be a string');
+                    expect(str, 'to equal', 'This is the second revision of foo.txt\n\nIt also has non-ASCII chars: æøÅ\n\nAnd some more text...\n');
+                    done();
+                }));
+            });
+
+            it('should read a file located in a sub-subdirectory', function (done) {
+                gitFakeFs.readFile('/subdir/subdir/bar.txt', 'utf-8', passError(done, function (str) {
+                    expect(str, 'to be a string');
+                    expect(str, 'to equal', 'The contents of bar.txt\n');
+                    done();
+                }));
+            });
+        });
+
+        describe('#stat()', function () {
+            it('should report foo.txt as a 99 byte long file', function (done) {
+                gitFakeFs.stat('/foo.txt', passError(done, function (stats) {
+                    expect(stats.size, 'to equal', 99);
+                    expect(stats.isFile(), 'to be', true);
+                    expect(stats.isDirectory(), 'to be', false);
+                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.mode & 0111, 'to be falsy');
+                    done();
+                }));
+            });
+
+            it('should report executable.sh as a 42 byte executable file', function (done) {
+                gitFakeFs.stat('/executable.sh', passError(done, function (stats) {
+                    expect(stats.size, 'to equal', 42);
+                    expect(stats.isFile(), 'to be', true);
+                    expect(stats.isDirectory(), 'to be', false);
+                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.mode & 0111, 'to be truthy');
+                    done();
+                }));
+            });
+
+            it('should report subdir as a directory', function (done) {
+                gitFakeFs.stat('/subdir', passError(done, function (stats) {
+                    expect(stats.isFile(), 'to be', false);
+                    expect(stats.isDirectory(), 'to be', true);
+                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.mode & 0111, 'to be falsy');
+                    done();
+                }));
+            });
+
+            it('should report symlinkToFoo.txt as a file', function (done) {
+                gitFakeFs.stat('/symlinkToFoo.txt', passError(done, function (stats) {
+                    expect(stats.isFile(), 'to be', true);
+                    expect(stats.isDirectory(), 'to be', false);
+                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.mode & 0111, 'to be falsy');
+                    done();
+                }));
+            });
+
+            it('should report symlinkToSubdir as a directory', function (done) {
+                gitFakeFs.stat('/symlinkToSubdir', passError(done, function (stats) {
+                    expect(stats.isFile(), 'to be', false);
+                    expect(stats.isDirectory(), 'to be', true);
+                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.mode & 0111, 'to be falsy');
+                    done();
+                }));
+            });
+
+            it('should report symlinkToExecutable.sh as an executable file', function (done) {
+                gitFakeFs.stat('/symlinkToExecutable.sh', passError(done, function (stats) {
+                    expect(stats.isFile(), 'to be', true);
+                    expect(stats.isDirectory(), 'to be', false);
+                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.mode & 0111, 'to be truthy');
+                    done();
+                }));
+            });
+        });
+
+        describe('#lstat()', function () {
+            it('should report foo.txt as a 99 byte long file', function (done) {
+                gitFakeFs.lstat('/foo.txt', passError(done, function (stats) {
+                    expect(stats.size, 'to equal', 99);
+                    expect(stats.isFile(), 'to be', true);
+                    expect(stats.isDirectory(), 'to be', false);
+                    expect(stats.isSymbolicLink(), 'to be', false);
+                    done();
+                }));
+            });
+
+            it('should report subdir as a directory', function (done) {
+                gitFakeFs.lstat('/subdir', passError(done, function (stats) {
+                    expect(stats.isFile(), 'to be', false);
+                    expect(stats.isDirectory(), 'to be', true);
+                    expect(stats.isSymbolicLink(), 'to be', false);
+                    done();
+                }));
+            });
+
+            it('should report symlinkToFoo.txt as a symbolic link', function (done) {
+                gitFakeFs.lstat('/symlinkToFoo.txt', passError(done, function (stats) {
+                    expect(stats.isFile(), 'to be', false);
+                    expect(stats.isDirectory(), 'to be', false);
+                    expect(stats.isSymbolicLink(), 'to be', true);
+                    done();
+                }));
+            });
+
+            it('should report symlinkToSubdir as a symbolic link', function (done) {
+                gitFakeFs.lstat('/symlinkToSubdir', passError(done, function (stats) {
+                    expect(stats.isFile(), 'to be', false);
+                    expect(stats.isDirectory(), 'to be', false);
+                    expect(stats.isSymbolicLink(), 'to be', true);
+                    done();
+                }));
+            });
+
+            it('should report symlinkToExecutable.sh as a symbolic link', function (done) {
+                gitFakeFs.lstat('/symlinkToExecutable.sh', passError(done, function (stats) {
+                    expect(stats.isFile(), 'to be', false);
+                    expect(stats.isDirectory(), 'to be', false);
+                    expect(stats.isSymbolicLink(), 'to be', true);
+                    done();
+                }));
+            });
         });
     });
-
-    it('readFile("/foo.txt") should produce the most recent version of foo.txt as a buffer', function (done) {
-        gitFakeFs.readFile('/foo.txt', passError(done, function (buf) {
-            expect(buf, 'to be a', Buffer);
-            expect(buf.toString('utf-8'), 'to equal', 'This is the second revision of foo.txt\n\nIt also has non-ASCII chars: æøÅ\n\nAnd some more text...\n');
-            done();
-        }));
-    });
-
-    it('readFile("/foo.txt", "utf-8") should produce the most recent version of foo.txt as a string', function (done) {
-        gitFakeFs.readFile('/foo.txt', 'utf-8', passError(done, function (str) {
-            expect(str, 'to be a string');
-            expect(str, 'to equal', 'This is the second revision of foo.txt\n\nIt also has non-ASCII chars: æøÅ\n\nAnd some more text...\n');
-            done();
-        }));
-    });
-
-    it('should be able to load a file located in a sub-subdirectory', function (done) {
-        gitFakeFs.readFile('/subdir/subdir/bar.txt', 'utf-8', passError(done, function (str) {
-            expect(str, 'to be a string');
-            expect(str, 'to equal', 'The contents of bar.txt\n');
-            done();
-        }));
-    });
-
 
     describe('pointed at the first commit in testrepo.git', function () {
         var gitFakeFs;

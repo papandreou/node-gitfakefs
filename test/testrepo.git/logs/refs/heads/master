@@ -1,3 +1,10 @@
 0000000000000000000000000000000000000000 738876c70f4f5243a6672def4233911678ce38db Andreas Lind Petersen <andreas@one.com> 1378022205 +0200	commit (initial): Checked in foo.txt.
 738876c70f4f5243a6672def4233911678ce38db 5d9bae32852806c8ca833bb5051ccfdc82174893 Andreas Lind Petersen <andreas@one.com> 1378022228 +0200	commit: Updated foo.txt.
 5d9bae32852806c8ca833bb5051ccfdc82174893 9262f7a0ce59b04c885c1b3e6ed2fc59fbcf304e Andreas Lind Petersen <andreas@one.com> 1379367879 +0200	commit: Added bar.txt.
+9262f7a0ce59b04c885c1b3e6ed2fc59fbcf304e 39964ce81b9190c0a813db5e200eaf98818cba64 Andreas Lind Petersen <andreas@one.com> 1379450851 +0200	commit: Added an executable file.
+39964ce81b9190c0a813db5e200eaf98818cba64 39c5c09d660b1bac8eb66898e88f72907ccbb223 Andreas Lind Petersen <andreas@one.com> 1379451468 +0200	commit: Added symlink to foo.txt
+39c5c09d660b1bac8eb66898e88f72907ccbb223 112948d62bc691043859fe909ce430549960bcb1 Andreas Lind Petersen <andreas@one.com> 1379451668 +0200	commit: Added symlink to subdir.
+112948d62bc691043859fe909ce430549960bcb1 019433c0486da194b36a8da59910316ad704accd Andreas Lind Petersen <andreas@one.com> 1379452534 +0200	commit: Added link to executable.sh
+019433c0486da194b36a8da59910316ad704accd 53fe6bbfa6a15f88356aab7bf6240c920604e470 Andreas Lind Petersen <andreas@one.com> 1379484770 +0200	commit: Added symlink to non-existent file.
+53fe6bbfa6a15f88356aab7bf6240c920604e470 37942a0df39065d37f1492455dc3c1c79c2ebf46 Andreas Lind Petersen <andreas@one.com> 1379484911 +0200	commit: Added symlink to symlink to non-existent file.
+37942a0df39065d37f1492455dc3c1c79c2ebf46 91fe03e2a9f37e49ddc0cf1a1fd19ef44d9b7c4b Andreas Lind Petersen <andreas@one.com> 1379541097 +0200	commit: {=> sym}linkToExecutable.sh
