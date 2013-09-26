@@ -201,4 +201,18 @@ describe('GitFakeFs', function () {
             }));
         });
     });
+
+    describe('pointed at the index of testrepo.git', function () {
+        var gitFakeFs;
+        beforeEach(function () {
+            gitFakeFs = new GitFakeFs(Path.resolve(__dirname, 'testrepo.git'), {index: true});
+        });
+
+        it('should contain /stagedFile.txt', function (done) {
+            gitFakeFs.readFile('/stagedFile.txt', 'utf-8', passError(done, function (contents) {
+                expect(contents, 'to equal', 'Contents of staged file\n');
+                done();
+            }));
+        });
+    });
 });
