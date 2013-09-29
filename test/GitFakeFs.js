@@ -4,10 +4,12 @@ var expect = require('unexpected'),
     GitFakeFs = require('../lib/GitFakeFs');
 
 describe('GitFakeFs', function () {
+    var pathToTestRepo = Path.resolve(__dirname, 'testrepo.git');
+
     describe('pointed at a the most recent commit in testrepo.git', function () {
         var gitFakeFs;
         beforeEach(function () {
-            gitFakeFs = new GitFakeFs(Path.resolve(__dirname, 'testrepo.git'));
+            gitFakeFs = new GitFakeFs(pathToTestRepo);
         });
 
         describe('#readdir()', function () {
@@ -125,7 +127,7 @@ describe('GitFakeFs', function () {
                     expect(err, 'to be an', Error);
                     expect(err.code, 'to equal', 'ELOOP');
                     expect(err.errno, 'to equal', 51);
-                    expect(err.message, 'to equal', "Error: ELOOP, too many symbolic links encountered '/symlinkToSelf'");
+                    expect(err.message, 'to equal', "[GitFakeFs " + pathToTestRepo + "] Error: ELOOP, too many symbolic links encountered '/symlinkToSelf'");
                     done();
                 });
             });
