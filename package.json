@@ -6,7 +6,6 @@
   "devDependencies": {
     "mocha": "=1.13.0",
     "sinon": "=1.7.3",
-    "underscore": "=1.5.2",
     "unexpected": "=1.0.0",
     "unexpected-sinon": "=0.1.0"
   },
@@ -31,6 +30,7 @@
     "memoizesync": "=0.2.1",
     "memoizeasync": "=0.3.1",
     "nodegit": "=0.1.0",
-    "passerror": "0.0.2"
+    "passerror": "0.0.2",
+    "underscore": "=1.5.2"
   }
 }

@@ -117,4 +117,32 @@ describe('GitWrappedFs', function () {
             });
         });
     });
+
+    describe('patching the built-in fs module "in-place"', function () {
+        var originalReadFile = require('fs').readFile;
+        beforeEach(function () {
+            GitWrappedFs.patchInPlace();
+        });
+
+        it('should replace the original readFile', function () {
+            var readFile = require('fs').readFile;
+            expect(readFile, 'to be a', Function);
+            expect(readFile, 'not to be', originalReadFile);
+        });
+
+        describe('#readdir()', function () {
+            it('should include the /contents/ directory when applied to the .git folder', function (done) {
+                require('fs').readdir(Path.resolve(pathToTestRepo), passError(done, function (entryNames) {
+                    expect(entryNames, 'to be an array');
+                    expect(entryNames, 'to contain', 'contents');
+                    done();
+                }));
+            });
+        });
+
+        afterEach(function () {
+            require('fs').unpatch();
+            expect(require('fs').readFile, 'to be', originalReadFile);
+        });
+    });
 });
