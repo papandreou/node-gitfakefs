@@ -236,9 +236,7 @@ describe('GitFakeFs', function () {
                     done();
                 }));
             });
-        });
 
-        describe('#readdir()', function () {
             it('should not include fileStagedForDeletion.txt in the listing of the root directory', function (done) {
                 gitFakeFs.readdir('/', passError(done, function (contents) {
                     expect(contents, 'not to contain', 'fileStagedForDeletion.txt');
