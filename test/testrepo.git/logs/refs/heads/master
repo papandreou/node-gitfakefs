@@ -11,3 +11,4 @@
 91fe03e2a9f37e49ddc0cf1a1fd19ef44d9b7c4b 54ee4d91ea42c2dff05c09e47782bd5601703eaa Andreas Lind Petersen <andreas@one.com> 1379621735 +0200	commit: Added self-referencing symlink.
 54ee4d91ea42c2dff05c09e47782bd5601703eaa 6d31fd36ab20d557c00aa042b4eaa6da53809a0e Andreas Lind Petersen <andreas@one.com> 1380308555 +0200	commit: Added file staged for deletion.
 6d31fd36ab20d557c00aa042b4eaa6da53809a0e a1410fe23cc0c126d5546a366545a88e1d649759 Andreas Lind Petersen <andreas@one.com> 1380404264 +0200	commit: Added submodule.
+a1410fe23cc0c126d5546a366545a88e1d649759 058213f696179d85f248fe28b1a0dd47c78f51a4 Andreas Lind Petersen <andreas@one.com> 1380489221 +0200	commit: subdir/{ => sub}subdir, added subdir/quux.txt

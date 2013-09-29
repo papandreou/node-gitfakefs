@@ -31,6 +31,16 @@ describe('GitFakeFs', function () {
                     done();
                 }));
             });
+
+            it('should dereference symlinks to directories', function (done) {
+                gitFakeFs.readdir('/symlinkToSubdir', passError(done, function (results) {
+                    expect(results.sort(), 'to equal', [
+                        'quux.txt',
+                        'subsubdir'
+                    ]);
+                    done();
+                }));
+            });
         });
 
         describe('#readFile()', function () {
@@ -51,7 +61,7 @@ describe('GitFakeFs', function () {
             });
 
             it('should read a file located in a sub-subdirectory', function (done) {
-                gitFakeFs.readFile('/subdir/subdir/bar.txt', 'utf-8', passError(done, function (str) {
+                gitFakeFs.readFile('/subdir/subsubdir/bar.txt', 'utf-8', passError(done, function (str) {
                     expect(str, 'to be a string');
                     expect(str, 'to equal', 'The contents of bar.txt\n');
                     done();
