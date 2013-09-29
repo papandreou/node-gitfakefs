@@ -14,7 +14,9 @@ describe('GitFakeFs', function () {
             it('should list the files in the most recent commit', function (done) {
                 gitFakeFs.readdir('/', passError(done, function (results) {
                     expect(results.sort(), 'to equal', [
+                        '.gitmodules',
                         'executable.sh',
+                        'fileStagedForDeletion.txt',
                         'foo.txt',
                         'subdir',
                         'symlinkToExecutable.sh',
@@ -185,6 +187,14 @@ describe('GitFakeFs', function () {
                     done();
                 }));
             });
+
+            it('should report submodule as not existing', function (done) {
+                gitFakeFs.lstat('/submodule', function (err) {
+                    expect(err, 'to be an', Error);
+                    expect(err.code, 'to equal', 'ENOENT');
+                    done();
+                });
+            });
         });
     });
 
@@ -208,11 +218,31 @@ describe('GitFakeFs', function () {
             gitFakeFs = new GitFakeFs(Path.resolve(__dirname, 'testrepo.git'), {index: true});
         });
 
-        it('should contain /stagedFile.txt', function (done) {
-            gitFakeFs.readFile('/stagedFile.txt', 'utf-8', passError(done, function (contents) {
-                expect(contents, 'to equal', 'Contents of staged file\n');
-                done();
-            }));
+        describe('#readFile()', function () {
+            it('should return the staged contents of /stagedFile.txt', function (done) {
+                gitFakeFs.readFile('/stagedFile.txt', 'utf-8', passError(done, function (contents) {
+                    expect(contents, 'to equal', 'Contents of staged file\n');
+                    done();
+                }));
+            });
+        });
+
+        describe('#readdir()', function () {
+            it('should include stagedFile.txt in the listing of the root directory', function (done) {
+                gitFakeFs.readdir('/', passError(done, function (contents) {
+                    expect(contents, 'to contain', 'stagedFile.txt');
+                    done();
+                }));
+            });
+        });
+
+        describe('#readdir()', function () {
+            it('should not include fileStagedForDeletion.txt in the listing of the root directory', function (done) {
+                gitFakeFs.readdir('/', passError(done, function (contents) {
+                    expect(contents, 'not to contain', 'fileStagedForDeletion.txt');
+                    done();
+                }));
+            });
         });
     });
 });

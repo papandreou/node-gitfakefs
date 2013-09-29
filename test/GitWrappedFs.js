@@ -81,6 +81,14 @@ describe('GitWrappedFs', function () {
                 }));
             });
 
+            it.skip('should list the commits when applied to the virtual /contents/commits/ directory', function (done) {
+                gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'contents', 'commits'), passError(done, function (entryNames) {
+                    expect(entryNames, 'to be an array');
+                    expect(entryNames, 'to contain', '91fe03e2a9f37e49ddc0cf1a1fd19ef44d9b7c4b');
+                    done();
+                }));
+            });
+
             it('should work outside the .git repository', function (done) {
                 gitWrappedFs.readdir(__dirname, passError(done, function (entryNames) {
                     expect(entryNames, 'to be an array');

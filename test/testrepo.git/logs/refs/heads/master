@@ -9,3 +9,5 @@
 53fe6bbfa6a15f88356aab7bf6240c920604e470 37942a0df39065d37f1492455dc3c1c79c2ebf46 Andreas Lind Petersen <andreas@one.com> 1379484911 +0200	commit: Added symlink to symlink to non-existent file.
 37942a0df39065d37f1492455dc3c1c79c2ebf46 91fe03e2a9f37e49ddc0cf1a1fd19ef44d9b7c4b Andreas Lind Petersen <andreas@one.com> 1379541097 +0200	commit: {=> sym}linkToExecutable.sh
 91fe03e2a9f37e49ddc0cf1a1fd19ef44d9b7c4b 54ee4d91ea42c2dff05c09e47782bd5601703eaa Andreas Lind Petersen <andreas@one.com> 1379621735 +0200	commit: Added self-referencing symlink.
+54ee4d91ea42c2dff05c09e47782bd5601703eaa 6d31fd36ab20d557c00aa042b4eaa6da53809a0e Andreas Lind Petersen <andreas@one.com> 1380308555 +0200	commit: Added file staged for deletion.
+6d31fd36ab20d557c00aa042b4eaa6da53809a0e a1410fe23cc0c126d5546a366545a88e1d649759 Andreas Lind Petersen <andreas@one.com> 1380404264 +0200	commit: Added submodule.
