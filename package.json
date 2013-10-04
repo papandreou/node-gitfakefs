@@ -4,6 +4,7 @@
   "description": "Emulate node.js' fs module on top of a git repository",
   "main": "lib/GitFakeFs.js",
   "devDependencies": {
+    "glob": "=3.2.6",
     "mocha": "=1.13.0",
     "sinon": "=1.7.3",
     "unexpected": "=1.0.0",
@@ -26,6 +27,7 @@
   "author": "Andreas Lind Petersen <andreas@one.com>",
   "license": "BSD",
   "dependencies": {
+    "async": "=0.2.9",
     "createerror": "=0.4.1",
     "memoizesync": "=0.2.1",
     "memoizeasync": "=0.3.1",

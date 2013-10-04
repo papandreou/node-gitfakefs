@@ -67,6 +67,20 @@ describe('GitFakeFs', function () {
                     done();
                 }));
             });
+
+            it('should dereference symlinks', function (done) {
+                gitFakeFs.readFile('/subdir/quux.txt', 'utf-8', passError(done, function (contents) {
+                    expect(contents, 'to equal', 'quux\n');
+                    done();
+                }));
+            });
+
+            it('should dereference multiple levels of symlinks', function (done) {
+                gitFakeFs.readFile('/symlinkToSubdir/quux.txt', 'utf-8', passError(done, function (contents) {
+                    expect(contents, 'to equal', 'quux\n');
+                    done();
+                }));
+            });
         });
 
         describe('#stat()', function () {
