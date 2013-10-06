@@ -145,6 +145,7 @@ describe('GitWrappedFs', function () {
 
     describe('patching the built-in fs module "in-place"', function () {
         var originalReadFile = require('fs').readFile;
+        require('fs').unpatch = 123;
         before(function () {
             GitWrappedFs.patchInPlace();
         });
@@ -177,8 +178,8 @@ describe('GitWrappedFs', function () {
 
         after(function () {
             require('fs').unpatch();
-            expect(require('fs'), 'not to have key', 'unpatch');
             expect(require('fs').readFile, 'to be', originalReadFile);
+            expect(require('fs').unpatch, 'to equal', 123);
         });
     });
 });
