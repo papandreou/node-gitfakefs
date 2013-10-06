@@ -177,6 +177,7 @@ describe('GitWrappedFs', function () {
 
         after(function () {
             require('fs').unpatch();
+            expect(require('fs'), 'not to have key', 'unpatch');
             expect(require('fs').readFile, 'to be', originalReadFile);
         });
     });
