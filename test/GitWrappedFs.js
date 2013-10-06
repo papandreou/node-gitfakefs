@@ -145,7 +145,7 @@ describe('GitWrappedFs', function () {
 
     describe('patching the built-in fs module "in-place"', function () {
         var originalReadFile = require('fs').readFile;
-        beforeEach(function () {
+        before(function () {
             GitWrappedFs.patchInPlace();
         });
 
@@ -166,7 +166,7 @@ describe('GitWrappedFs', function () {
         });
 
         it('should make the glob work on the contents directory', function (done) {
-            require('glob')(Path.resolve(pathToTestRepo, 'contents/**/*'), {mark: true}, passError(done, function (fileNames) {
+            require('glob')('**/*', {mark: true, cwd: pathToTestRepo + '/contents'}, passError(done, function (fileNames) {
                 expect(fileNames, 'to be an array');
                 expect(fileNames, 'to contain', Path.resolve(pathToTestRepo, 'contents', 'commits', '39c5c09d660b1bac8eb66898e88f72907ccbb223', 'foo.txt'));
                 expect(fileNames, 'to contain', Path.resolve(pathToTestRepo, 'contents', 'tags', 'myTag', 'symlinkToSymlinkToNonExistentFile'));
@@ -175,7 +175,7 @@ describe('GitWrappedFs', function () {
             }));
         });
 
-        afterEach(function () {
+        after(function () {
             require('fs').unpatch();
             expect(require('fs').readFile, 'to be', originalReadFile);
         });
