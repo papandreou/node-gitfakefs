@@ -101,7 +101,7 @@ describe('GitWrappedFs', function () {
             it('should return the types of objects when applied to the virtual /gitFakeFs/ directory', function (done) {
                 gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'gitFakeFs'), passError(done, function (entryNames) {
                     expect(entryNames, 'to be an array');
-                    expect(entryNames, 'to equal', ['HEAD', 'branches', 'tags', 'commits', 'index']);
+                    expect(entryNames, 'to equal', ['HEAD', 'branches', 'tags', 'commits', 'index', 'changesInIndex']);
                     done();
                 }));
             });
@@ -126,6 +126,34 @@ describe('GitWrappedFs', function () {
                 gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'gitFakeFs', 'commits'), passError(done, function (entryNames) {
                     expect(entryNames, 'to be an array');
                     expect(entryNames, 'to contain', '91fe03e2a9f37e49ddc0cf1a1fd19ef44d9b7c4b');
+                    done();
+                }));
+            });
+
+            it('should list the contents of the index when applied to the virtual /gitFakeFs/index/ directory', function (done) {
+                gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'gitFakeFs', 'index'), passError(done, function (entryNames) {
+                    expect(entryNames, 'to be an array');
+                    expect(entryNames, 'to contain', 'stagedFile.txt');
+                    done();
+                }));
+            });
+
+            it('should list the contents of the index when applied to the virtual /gitFakeFs/index/ directory', function (done) {
+                gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'gitFakeFs', 'index'), passError(done, function (entryNames) {
+                    expect(entryNames, 'to be an array');
+                    expect(entryNames, 'to contain', 'stagedFile.txt');
+                    expect(entryNames, 'to contain', 'foo.txt');
+                    expect(entryNames, 'not to contain', 'fileStagedForDeletion.txt');
+                    done();
+                }));
+            });
+
+            it('should list the entries that have changed in the index when applied to the virtual /gitFakeFs/changesInIndex/ directory', function (done) {
+                gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'gitFakeFs', 'changesInIndex'), passError(done, function (entryNames) {
+                    expect(entryNames, 'to be an array');
+                    expect(entryNames, 'to contain', 'stagedFile.txt');
+                    expect(entryNames, 'not to contain', 'foo.txt');
+                    expect(entryNames, 'not to contain', 'fileStagedForDeletion.txt');
                     done();
                 }));
             });
