@@ -69,15 +69,15 @@ describe('GitFakeFs', function () {
             });
 
             it('should dereference symlinks', function (done) {
-                gitFakeFs.readFile('/subdir/quux.txt', 'utf-8', passError(done, function (contents) {
-                    expect(contents, 'to equal', 'quux\n');
+                gitFakeFs.readFile('/subdir/quux.txt', 'utf-8', passError(done, function (gitFakeFs) {
+                    expect(gitFakeFs, 'to equal', 'quux\n');
                     done();
                 }));
             });
 
             it('should dereference multiple levels of symlinks', function (done) {
-                gitFakeFs.readFile('/symlinkToSubdir/quux.txt', 'utf-8', passError(done, function (contents) {
-                    expect(contents, 'to equal', 'quux\n');
+                gitFakeFs.readFile('/symlinkToSubdir/quux.txt', 'utf-8', passError(done, function (gitFakeFs) {
+                    expect(gitFakeFs, 'to equal', 'quux\n');
                     done();
                 }));
             });
@@ -231,8 +231,8 @@ describe('GitFakeFs', function () {
         });
 
         it('should contain the initial version of foo.txt', function (done) {
-            gitFakeFs.readFile('/foo.txt', 'utf-8', passError(done, function (contents) {
-                expect(contents, 'to equal', 'This is the first revision of foo.txt\n\nIt has non-ASCII chars: æøÅ\n');
+            gitFakeFs.readFile('/foo.txt', 'utf-8', passError(done, function (gitFakeFs) {
+                expect(gitFakeFs, 'to equal', 'This is the first revision of foo.txt\n\nIt has non-ASCII chars: æøÅ\n');
                 done();
             }));
         });
@@ -245,9 +245,9 @@ describe('GitFakeFs', function () {
         });
 
         describe('#readFile()', function () {
-            it('should return the staged contents of /stagedFile.txt', function (done) {
-                gitFakeFs.readFile('/stagedFile.txt', 'utf-8', passError(done, function (contents) {
-                    expect(contents, 'to equal', 'Contents of staged file\n');
+            it('should return the staged gitFakeFs of /stagedFile.txt', function (done) {
+                gitFakeFs.readFile('/stagedFile.txt', 'utf-8', passError(done, function (gitFakeFs) {
+                    expect(gitFakeFs, 'to equal', 'Contents of staged file\n');
                     done();
                 }));
             });
@@ -255,15 +255,15 @@ describe('GitFakeFs', function () {
 
         describe('#readdir()', function () {
             it('should include stagedFile.txt in the listing of the root directory', function (done) {
-                gitFakeFs.readdir('/', passError(done, function (contents) {
-                    expect(contents, 'to contain', 'stagedFile.txt');
+                gitFakeFs.readdir('/', passError(done, function (gitFakeFs) {
+                    expect(gitFakeFs, 'to contain', 'stagedFile.txt');
                     done();
                 }));
             });
 
             it('should not include fileStagedForDeletion.txt in the listing of the root directory', function (done) {
-                gitFakeFs.readdir('/', passError(done, function (contents) {
-                    expect(contents, 'not to contain', 'fileStagedForDeletion.txt');
+                gitFakeFs.readdir('/', passError(done, function (gitFakeFs) {
+                    expect(gitFakeFs, 'not to contain', 'fileStagedForDeletion.txt');
                     done();
                 }));
             });

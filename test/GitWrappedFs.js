@@ -24,40 +24,40 @@ describe('GitWrappedFs', function () {
 
         ['stat', 'lstat'].forEach(function (methodName) {
             describe('#' + methodName + '()', function () {
-                it('should report /contents/ as a directory', function (done) {
-                    gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'contents'), passError(done, function (stats) {
+                it('should report /gitFakeFs/ as a directory', function (done) {
+                    gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'gitFakeFs'), passError(done, function (stats) {
                         expect(stats.isDirectory(), 'to be', true);
                         expect(stats.isFile(), 'to be', false);
                         done();
                     }));
                 });
 
-                it('should report /contents/branches/ as a directory', function (done) {
-                    gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'contents', 'branches'), passError(done, function (stats) {
+                it('should report /gitFakeFs/branches/ as a directory', function (done) {
+                    gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'gitFakeFs', 'branches'), passError(done, function (stats) {
                         expect(stats.isDirectory(), 'to be', true);
                         expect(stats.isFile(), 'to be', false);
                         done();
                     }));
                 });
 
-                it('should report /contents/branches/master/ as a directory', function (done) {
-                    gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'contents', 'branches', 'master'), passError(done, function (stats) {
+                it('should report /gitFakeFs/branches/master/ as a directory', function (done) {
+                    gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'gitFakeFs', 'branches', 'master'), passError(done, function (stats) {
                         expect(stats.isDirectory(), 'to be', true);
                         expect(stats.isFile(), 'to be', false);
                         done();
                     }));
                 });
 
-                it('should report /contents/commits/738876c70f4f5243a6672def4233911678ce38db/ as a directory', function (done) {
-                    gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'contents', 'commits', '738876c70f4f5243a6672def4233911678ce38db'), passError(done, function (stats) {
+                it('should report /gitFakeFs/commits/738876c70f4f5243a6672def4233911678ce38db/ as a directory', function (done) {
+                    gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'gitFakeFs', 'commits', '738876c70f4f5243a6672def4233911678ce38db'), passError(done, function (stats) {
                         expect(stats.isDirectory(), 'to be', true);
                         expect(stats.isFile(), 'to be', false);
                         done();
                     }));
                 });
 
-                it('should return an ENOENT error for an unsupported entry in /contents/', function (done) {
-                    gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'contents', 'foo'), function (err) {
+                it('should return an ENOENT error for an unsupported entry in /gitFakeFs/', function (done) {
+                    gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'gitFakeFs', 'foo'), function (err) {
                         expect(err, 'to be an', Error);
                         done();
                     });
@@ -66,40 +66,40 @@ describe('GitWrappedFs', function () {
         });
 
         describe('#readdir()', function () {
-            it('should include the /contents/ directory when applied to the .git folder', function (done) {
+            it('should include the /gitFakeFs/ directory when applied to the .git folder', function (done) {
                 gitWrappedFs.readdir(Path.resolve(pathToTestRepo), passError(done, function (entryNames) {
                     expect(entryNames, 'to be an array');
-                    expect(entryNames, 'to contain', 'contents');
+                    expect(entryNames, 'to contain', 'gitFakeFs');
                     done();
                 }));
             });
 
-            it('should return the types of objects when applied to the virtual /contents/ directory', function (done) {
-                gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'contents'), passError(done, function (entryNames) {
+            it('should return the types of objects when applied to the virtual /gitFakeFs/ directory', function (done) {
+                gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'gitFakeFs'), passError(done, function (entryNames) {
                     expect(entryNames, 'to be an array');
                     expect(entryNames, 'to equal', ['branches', 'tags', 'commits', 'index']);
                     done();
                 }));
             });
 
-            it('should list the branches when applied to the virtual /contents/branches/ directory', function (done) {
-                gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'contents', 'branches'), passError(done, function (entryNames) {
+            it('should list the branches when applied to the virtual /gitFakeFs/branches/ directory', function (done) {
+                gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'gitFakeFs', 'branches'), passError(done, function (entryNames) {
                     expect(entryNames, 'to be an array');
                     expect(entryNames, 'to contain', 'master');
                     done();
                 }));
             });
 
-            it('should list the tags when applied to the virtual /contents/tag/ directory', function (done) {
-                gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'contents', 'tags'), passError(done, function (entryNames) {
+            it('should list the tags when applied to the virtual /gitFakeFs/tag/ directory', function (done) {
+                gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'gitFakeFs', 'tags'), passError(done, function (entryNames) {
                     expect(entryNames, 'to be an array');
                     expect(entryNames, 'to contain', 'myTag');
                     done();
                 }));
             });
 
-            it('should list the commits when applied to the virtual /contents/commits/ directory', function (done) {
-                gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'contents', 'commits'), passError(done, function (entryNames) {
+            it('should list the commits when applied to the virtual /gitFakeFs/commits/ directory', function (done) {
+                gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'gitFakeFs', 'commits'), passError(done, function (entryNames) {
                     expect(entryNames, 'to be an array');
                     expect(entryNames, 'to contain', '91fe03e2a9f37e49ddc0cf1a1fd19ef44d9b7c4b');
                     done();
@@ -117,26 +117,26 @@ describe('GitWrappedFs', function () {
 
         describe('#readFile()', function () {
             it('should proxy a path outside a .git repository to the wrapped fs implementation', function (done) {
-                gitWrappedFs.readFile(__filename, 'utf-8', passError(done, function (contents) {
+                gitWrappedFs.readFile(__filename, 'utf-8', passError(done, function (gitFakeFs) {
                     expect(fs.readFile, 'was called once');
                     expect(fs.readFile, 'was always called with', __filename, 'utf-8');
-                    expect(contents, 'to match', /GitWrappedFs/);
+                    expect(gitFakeFs, 'to match', /GitWrappedFs/);
                     done();
                 }));
             });
 
             it('should proxy a path inside a branch to the GitFakeFs', function (done) {
-                gitWrappedFs.readFile(Path.resolve(pathToTestRepo, 'contents', 'branches', 'master', 'foo.txt'), 'utf-8', passError(done, function (contents) {
+                gitWrappedFs.readFile(Path.resolve(pathToTestRepo, 'gitFakeFs', 'branches', 'master', 'foo.txt'), 'utf-8', passError(done, function (gitFakeFs) {
                     expect(fs.readFile, 'was not called');
-                    expect(contents, 'to match', /This is the second revision of foo\.txt/);
+                    expect(gitFakeFs, 'to match', /This is the second revision of foo\.txt/);
                     done();
                 }));
             });
 
             it('should proxy a path inside a commit to the GitFakeFs', function (done) {
-                gitWrappedFs.readFile(Path.resolve(pathToTestRepo, 'contents', 'commits', '738876c70f4f5243a6672def4233911678ce38db', 'foo.txt'), 'utf-8', passError(done, function (contents) {
+                gitWrappedFs.readFile(Path.resolve(pathToTestRepo, 'gitFakeFs', 'commits', '738876c70f4f5243a6672def4233911678ce38db', 'foo.txt'), 'utf-8', passError(done, function (gitFakeFs) {
                     expect(fs.readFile, 'was not called');
-                    expect(contents, 'to match', /This is the first revision of foo\.txt/);
+                    expect(gitFakeFs, 'to match', /This is the first revision of foo\.txt/);
                     done();
                 }));
             });
@@ -157,21 +157,21 @@ describe('GitWrappedFs', function () {
         });
 
         describe('#readdir()', function () {
-            it('should include the /contents/ directory when applied to the .git folder', function (done) {
+            it('should include the /gitFakeFs/ directory when applied to the .git folder', function (done) {
                 require('fs').readdir(pathToTestRepo, passError(done, function (entryNames) {
                     expect(entryNames, 'to be an array');
-                    expect(entryNames, 'to contain', 'contents');
+                    expect(entryNames, 'to contain', 'gitFakeFs');
                     done();
                 }));
             });
         });
 
-        it('should make the glob work on the contents directory', function (done) {
-            require('glob')(Path.resolve(pathToTestRepo, 'contents', '**', '*'), {mark: true, stat: true}, passError(done, function (fileNames) {
+        it('should make the glob work on the gitFakeFs directory', function (done) {
+            require('glob')(Path.resolve(pathToTestRepo, 'gitFakeFs', '**', '*'), {mark: true, stat: true}, passError(done, function (fileNames) {
                 expect(fileNames, 'to be an array');
-                expect(fileNames, 'to contain', Path.resolve(pathToTestRepo, 'contents', 'commits', '39c5c09d660b1bac8eb66898e88f72907ccbb223', 'foo.txt'));
-                expect(fileNames, 'to contain', Path.resolve(pathToTestRepo, 'contents', 'tags', 'myTag', 'symlinkToSymlinkToNonExistentFile'));
-                expect(fileNames, 'to contain', Path.resolve(pathToTestRepo, 'contents', 'branches', 'master', 'symlinkToSubdir/subsubdir/bar.txt'));
+                expect(fileNames, 'to contain', Path.resolve(pathToTestRepo, 'gitFakeFs', 'commits', '39c5c09d660b1bac8eb66898e88f72907ccbb223', 'foo.txt'));
+                expect(fileNames, 'to contain', Path.resolve(pathToTestRepo, 'gitFakeFs', 'tags', 'myTag', 'symlinkToSymlinkToNonExistentFile'));
+                expect(fileNames, 'to contain', Path.resolve(pathToTestRepo, 'gitFakeFs', 'branches', 'master', 'symlinkToSubdir/subsubdir/bar.txt'));
                 done();
             }));
         });
