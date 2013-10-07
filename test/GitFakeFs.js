@@ -417,4 +417,59 @@ describe('GitFakeFs', function () {
             });
         });
     });
+
+    describe('pointed at the index of testrepo.git with the changesInIndex option set to true', function () {
+        var gitFakeFs;
+        beforeEach(function () {
+            gitFakeFs = new GitFakeFs(Path.resolve(__dirname, 'testrepo.git'), {index: true, changesInIndex: true});
+        });
+
+        describe('#readdir()', function () {
+            it('should list the changed entries in the root', function (done) {
+                gitFakeFs.readdir('/', passError(done, function (entries) {
+                    expect(entries, 'to equal', ['another', 'stagedFile.txt', 'subdir']);
+                    done();
+                }));
+            });
+
+            it('should list the changed entries in /subdir', function (done) {
+                gitFakeFs.readdir('/subdir', passError(done, function (entries) {
+                    expect(entries, 'to equal', ['stagedFileInSubdir.txt']);
+                    done();
+                }));
+            });
+        });
+
+        describe('#stat()', function () {
+            it('should report /stagedFile.txt as a file', function (done) {
+                gitFakeFs.stat('/stagedFile.txt', passError(done, function (stats) {
+                    expect(stats.isFile(), 'to equal', true);
+                    done();
+                }));
+            });
+
+            it('should report /subdir/stagedFileInSubdir.txt as a file', function (done) {
+                gitFakeFs.stat('/subdir/stagedFileInSubdir.txt', passError(done, function (stats) {
+                    expect(stats.isFile(), 'to equal', true);
+                    done();
+                }));
+            });
+
+            it('should return ENOENT for /fileStagedForDeletion.txt', function (done) {
+                gitFakeFs.stat('/fileStagedForDeletion.txt', function (err, stats) {
+                    expect(err, 'to be an', Error);
+                    expect(err.message, 'to match', /ENOENT/);
+                    done();
+                });
+            });
+
+            it('should return ENOENT for /foo.txt', function (done) {
+                gitFakeFs.stat('/foo.txt', function (err, stats) {
+                    expect(err, 'to be an', Error);
+                    expect(err.message, 'to match', /ENOENT/);
+                    done();
+                });
+            });
+        });
+    });
 });
