@@ -254,9 +254,17 @@ describe('GitFakeFs', function () {
         });
 
         describe('#readdir()', function () {
-            it('should include stagedFile.txt in the listing of the root directory', function (done) {
+            it('should include stagedFile.txt and another in the listing of the root directory', function (done) {
                 gitFakeFs.readdir('/', passError(done, function (gitFakeFs) {
                     expect(gitFakeFs, 'to contain', 'stagedFile.txt');
+                    expect(gitFakeFs, 'to contain', 'another');
+                    done();
+                }));
+            });
+
+            it('should include subdir in the directory listing of /another', function (done) {
+                gitFakeFs.readdir('/another', passError(done, function (gitFakeFs) {
+                    expect(gitFakeFs, 'to contain', 'subdir');
                     done();
                 }));
             });
