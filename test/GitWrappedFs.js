@@ -32,6 +32,30 @@ describe('GitWrappedFs', function () {
                     }));
                 });
 
+                it('should report /gitFakeFs/HEAD/ as a directory', function (done) {
+                    gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'gitFakeFs', 'HEAD'), passError(done, function (stats) {
+                        expect(stats.isDirectory(), 'to be', true);
+                        expect(stats.isFile(), 'to be', false);
+                        done();
+                    }));
+                });
+
+                it('should report /gitFakeFs/HEAD/subdir/ as a directory', function (done) {
+                    gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'gitFakeFs', 'HEAD', 'subdir'), passError(done, function (stats) {
+                        expect(stats.isDirectory(), 'to be', true);
+                        expect(stats.isFile(), 'to be', false);
+                        done();
+                    }));
+                });
+
+                it('should report /gitFakeFs/HEAD/foo.txt as a file', function (done) {
+                    gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'gitFakeFs', 'HEAD', 'foo.txt'), passError(done, function (stats) {
+                        expect(stats.isDirectory(), 'to be', false);
+                        expect(stats.isFile(), 'to be', true);
+                        done();
+                    }));
+                });
+
                 it('should report /gitFakeFs/branches/ as a directory', function (done) {
                     gitWrappedFs.stat(Path.resolve(pathToTestRepo, 'gitFakeFs', 'branches'), passError(done, function (stats) {
                         expect(stats.isDirectory(), 'to be', true);
@@ -77,7 +101,7 @@ describe('GitWrappedFs', function () {
             it('should return the types of objects when applied to the virtual /gitFakeFs/ directory', function (done) {
                 gitWrappedFs.readdir(Path.resolve(pathToTestRepo, 'gitFakeFs'), passError(done, function (entryNames) {
                     expect(entryNames, 'to be an array');
-                    expect(entryNames, 'to equal', ['branches', 'tags', 'commits', 'index']);
+                    expect(entryNames, 'to equal', ['HEAD', 'branches', 'tags', 'commits', 'index']);
                     done();
                 }));
             });
@@ -172,6 +196,7 @@ describe('GitWrappedFs', function () {
                 expect(fileNames, 'to contain', Path.resolve(pathToTestRepo, 'gitFakeFs', 'commits', '39c5c09d660b1bac8eb66898e88f72907ccbb223', 'foo.txt'));
                 expect(fileNames, 'to contain', Path.resolve(pathToTestRepo, 'gitFakeFs', 'tags', 'myTag', 'symlinkToSymlinkToNonExistentFile'));
                 expect(fileNames, 'to contain', Path.resolve(pathToTestRepo, 'gitFakeFs', 'branches', 'master', 'symlinkToSubdir/subsubdir/bar.txt'));
+                expect(fileNames, 'to contain', Path.resolve(pathToTestRepo, 'gitFakeFs', 'HEAD', 'symlinkToSubdir/subsubdir/bar.txt'));
                 done();
             }));
         });
