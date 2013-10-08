@@ -231,6 +231,20 @@ describe('GitFakeFs', function () {
                 }));
             });
 
+            it('should report /subdir as /subdir', function (done) {
+                gitFakeFs.realpath('/subdir', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/subdir');
+                    done();
+                }));
+            });
+
+            it('should report /subdir/quux.txt as /subdir.txt', function (done) {
+                gitFakeFs.realpath('/subdir/quux.txt', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/subdir/quux.txt');
+                    done();
+                }));
+            });
+
             it('should report /symlinkToSubdir as /subdir', function (done) {
                 gitFakeFs.realpath('/symlinkToSubdir', passError(done, function (realpath) {
                     expect(realpath, 'to equal', '/subdir');
@@ -475,6 +489,20 @@ describe('GitFakeFs', function () {
                     done();
                 }));
             });
+
+            it('should report /subdir as /subdir', function (done) {
+                gitFakeFs.realpath('/subdir', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/subdir');
+                    done();
+                }));
+            });
+
+            it('should report /subdir/quux.txt as /subdir/quux.txt', function (done) {
+                gitFakeFs.realpath('/subdir/quux.txt', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/subdir/quux.txt');
+                    done();
+                }));
+            });
         });
     });
 
@@ -529,6 +557,52 @@ describe('GitFakeFs', function () {
                     expect(err.message, 'to match', /ENOENT/);
                     done();
                 });
+            });
+        });
+
+        describe('#realpath()', function () {
+            it('should return ENOENT for /foo.txt', function (done) {
+                gitFakeFs.realpath('/foo.txt', function (err, realpath) {
+                    expect(err, 'to be an', Error);
+                    expect(err.message, 'to match', /ENOENT/);
+                    done();
+                });
+            });
+
+            it('should return ENOENT for /fileStagedForDeletion.txt', function (done) {
+                gitFakeFs.realpath('/fileStagedForDeletion.txt', function (err, realpath) {
+                    expect(err, 'to be an', Error);
+                    expect(err.message, 'to match', /ENOENT/);
+                    done();
+                });
+            });
+
+            it('should report /another as /another', function (done) {
+                gitFakeFs.realpath('/another', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/another');
+                    done();
+                }));
+            });
+
+            it('should report /another/subdir as /another/subdir', function (done) {
+                gitFakeFs.realpath('/another/subdir', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/another/subdir');
+                    done();
+                }));
+            });
+
+            it('should report /another/subdir as /another/subdir', function (done) {
+                gitFakeFs.realpath('/another/subdir', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/another/subdir');
+                    done();
+                }));
+            });
+
+            it('should report /another/subdir/that/only/exists/because/of/a/stagedFile.txt as itself', function (done) {
+                gitFakeFs.realpath('/another/subdir/that/only/exists/because/of/a/stagedFile.txt', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/another/subdir/that/only/exists/because/of/a/stagedFile.txt');
+                    done();
+                }));
             });
         });
     });
