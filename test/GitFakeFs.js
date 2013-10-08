@@ -222,6 +222,36 @@ describe('GitFakeFs', function () {
                 });
             });
         });
+
+        describe('#realpath()', function () {
+            it('should report /foo.txt as /foo.txt', function (done) {
+                gitFakeFs.realpath('/foo.txt', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/foo.txt');
+                    done();
+                }));
+            });
+
+            it('should report /symlinkToSubdir as /subdir', function (done) {
+                gitFakeFs.realpath('/symlinkToSubdir', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/subdir');
+                    done();
+                }));
+            });
+
+            it('should report /symlinkToSubdir/quux.txt as /subdir/quux.txt', function (done) {
+                gitFakeFs.realpath('/symlinkToSubdir/quux.txt', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/subdir/quux.txt');
+                    done();
+                }));
+            });
+
+            it('should report / as /', function (done) {
+                gitFakeFs.realpath('/', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/');
+                    done();
+                }));
+            });
+        });
     });
 
     describe('pointed at the first commit in testrepo.git', function () {
@@ -414,6 +444,36 @@ describe('GitFakeFs', function () {
                     expect(err.code, 'to equal', 'ENOENT');
                     done();
                 });
+            });
+        });
+
+        describe('#realpath()', function () {
+            it('should report /foo.txt as /foo.txt', function (done) {
+                gitFakeFs.realpath('/foo.txt', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/foo.txt');
+                    done();
+                }));
+            });
+
+            it('should report /symlinkToSubdir as /subdir', function (done) {
+                gitFakeFs.realpath('/symlinkToSubdir', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/subdir');
+                    done();
+                }));
+            });
+
+            it('should report /symlinkToSubdir/quux.txt as /subdir/quux.txt', function (done) {
+                gitFakeFs.realpath('/symlinkToSubdir/quux.txt', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/subdir/quux.txt');
+                    done();
+                }));
+            });
+
+            it('should report / as /', function (done) {
+                gitFakeFs.realpath('/', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/');
+                    done();
+                }));
             });
         });
     });
