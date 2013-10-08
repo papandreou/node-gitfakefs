@@ -4,7 +4,6 @@
   "description": "Emulate node.js' fs module on top of a git repository",
   "main": "lib/GitFakeFs.js",
   "devDependencies": {
-    "glob": "=3.2.6",
     "mocha": "=1.13.0",
     "sinon": "=1.7.3",
     "unexpected": "=1.0.0",
