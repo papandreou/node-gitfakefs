@@ -1,6 +1,6 @@
 {
   "name": "gitfakefs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Emulate node.js' fs module on top of a git repository",
   "main": "lib/GitFakeFs.js",
   "devDependencies": {
