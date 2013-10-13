@@ -703,12 +703,13 @@ describe('GitFakeFs', function () {
                 }));
             });
 
-            it('should include untrackedFile.txt in the listing of /', function (done) {
+            it.skip('should not include fileStagedForDeletion.txt in the listing of /', function (done) {
                 gitFakeFs.readdir('/', passError(done, function (names) {
-                    expect(names, 'to contain', 'untrackedFile.txt');
+                    expect(names, 'not to contain', 'fileStagedForDeletion.txt');
                     done();
                 }));
             });
+
 
             it('should be able to read the listing of /untrackedDirectory', function (done) {
                 gitFakeFs.readdir('/untrackedDirectory', passError(done, function (names) {
@@ -743,6 +744,15 @@ describe('GitFakeFs', function () {
             it('should return an ENOENT error for a path that does not exist in either the index or the working copy', function (done) {
                 gitFakeFs.readFile('/i/do/not/exist', function (err) {
                     expect(err, 'to be an', Error);
+                    expect(err.message, 'to match', /ENOENT/);
+                    done();
+                });
+            });
+
+            it.skip('should return an ENOENT error for a path that has been deleted in the index, but exists in HEAD and the working copy', function (done) {
+                gitFakeFs.readFile('/fileStagedForDeletion.txt', function (err) {
+                    expect(err, 'to be an', Error);
+                    expect(err.message, 'to match', /ENOENT/);
                     done();
                 });
             });
