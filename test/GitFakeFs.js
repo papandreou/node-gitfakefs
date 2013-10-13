@@ -4,9 +4,9 @@ var expect = require('unexpected'),
     GitFakeFs = require('../lib/GitFakeFs');
 
 describe('GitFakeFs', function () {
-    var pathToTestRepo = Path.resolve(__dirname, 'testrepo.git');
+    var pathToTestRepo = Path.resolve(__dirname, 'testRepo.git');
 
-    describe('pointed at a the most recent commit in testrepo.git', function () {
+    describe('pointed at a the most recent commit in testRepo.git', function () {
         var gitFakeFs;
         beforeEach(function () {
             gitFakeFs = new GitFakeFs(pathToTestRepo);
@@ -268,10 +268,10 @@ describe('GitFakeFs', function () {
         });
     });
 
-    describe('pointed at the first commit in testrepo.git', function () {
+    describe('pointed at the first commit in testRepo.git', function () {
         var gitFakeFs;
         beforeEach(function () {
-            gitFakeFs = new GitFakeFs(Path.resolve(__dirname, 'testrepo.git'), {ref: '738876c70f4f5243a6672def4233911678ce38db'});
+            gitFakeFs = new GitFakeFs(Path.resolve(__dirname, 'testRepo.git'), {ref: '738876c70f4f5243a6672def4233911678ce38db'});
         });
 
         it('should contain the initial version of foo.txt', function (done) {
@@ -282,10 +282,10 @@ describe('GitFakeFs', function () {
         });
     });
 
-    describe('pointed at the index of testrepo.git', function () {
+    describe('pointed at the index of testRepo.git', function () {
         var gitFakeFs;
         beforeEach(function () {
-            gitFakeFs = new GitFakeFs(Path.resolve(__dirname, 'testrepo.git'), {index: true});
+            gitFakeFs = new GitFakeFs(Path.resolve(__dirname, 'testRepo.git'), {index: true});
         });
 
         describe('#readFile()', function () {
@@ -506,10 +506,10 @@ describe('GitFakeFs', function () {
         });
     });
 
-    describe('pointed at the index of testrepo.git with the changesInIndex option set to true', function () {
+    describe('pointed at the index of testRepo.git with the changesInIndex option set to true', function () {
         var gitFakeFs;
         beforeEach(function () {
-            gitFakeFs = new GitFakeFs(Path.resolve(__dirname, 'testrepo.git'), {index: true, changesInIndex: true});
+            gitFakeFs = new GitFakeFs(Path.resolve(__dirname, 'testRepo.git'), {index: true, changesInIndex: true});
         });
 
         describe('#readdir()', function () {
