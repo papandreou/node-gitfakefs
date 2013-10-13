@@ -8,6 +8,11 @@ describe('GitFakeFs', function () {
     var pathToTestRepo = Path.resolve(__dirname, 'testRepo.git'),
         pathToTestRepoWithWorkingCopy = Path.resolve(__dirname, 'testRepoWithWorkingCopy');
 
+    // Use testRepo.git as the .git folder of the test repository that has a working copy:
+    before(function (done) {
+        require('ncp').ncp(pathToTestRepo, Path.resolve(pathToTestRepoWithWorkingCopy, '.git'), done);
+    });
+
     describe('pointed at a the most recent commit in testRepo.git', function () {
         var gitFakeFs;
         beforeEach(function () {
@@ -684,16 +689,6 @@ describe('GitFakeFs', function () {
     });
 
     describe('pointed at the index of testRepoWithWorkingCopy with the fallBackToWorkingCopy option set to true', function () {
-        // Use testRepo.git as the .git folder of the test repository that has a working copy. As far as I can tell, a symbolic
-        // link called .git cannot be put under version control, so make sure it exists before starting:
-        try {
-            fs.symlinkSync(pathToTestRepo, Path.resolve(pathToTestRepoWithWorkingCopy, '.git'));
-        } catch (e) {
-            if (e.code !== 'EEXIST') {
-                throw e;
-            }
-        }
-
         var gitFakeFs;
         beforeEach(function () {
             gitFakeFs = new GitFakeFs(pathToTestRepoWithWorkingCopy, {index: true, fallBackToWorkingCopy: true});
