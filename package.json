@@ -29,7 +29,7 @@
     "async": "=0.2.9",
     "createerror": "=0.4.1",
     "memoizeasync": "=0.3.1",
-    "nodegit-papandreou": "=0.1.0patch2",
+    "nodegit-papandreou": "=0.1.0patch3",
     "passerror": "0.0.2",
     "underscore": "=1.5.2"
   }
