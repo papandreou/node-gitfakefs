@@ -1,0 +1,2 @@
+Contents of staged file
+... with further changes in the working copy!

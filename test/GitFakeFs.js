@@ -1,10 +1,12 @@
 var expect = require('unexpected'),
     passError = require('passerror'),
     Path = require('path'),
+    fs = require('fs'),
     GitFakeFs = require('../lib/GitFakeFs');
 
 describe('GitFakeFs', function () {
-    var pathToTestRepo = Path.resolve(__dirname, 'testRepo.git');
+    var pathToTestRepo = Path.resolve(__dirname, 'testRepo.git'),
+        pathToTestRepoWithWorkingCopy = Path.resolve(__dirname, 'testRepoWithWorkingCopy');
 
     describe('pointed at a the most recent commit in testRepo.git', function () {
         var gitFakeFs;
@@ -603,6 +605,183 @@ describe('GitFakeFs', function () {
                     expect(realpath, 'to equal', '/another/subdir/that/only/exists/because/of/a/stagedFile.txt');
                     done();
                 }));
+            });
+        });
+    });
+
+    describe('pointed at the index of testRepo.git with the fallBackToWorkingCopy option set to true', function () {
+        var gitFakeFs;
+        beforeEach(function () {
+            gitFakeFs = new GitFakeFs(pathToTestRepoWithWorkingCopy, {index: true, fallBackToWorkingCopy: true});
+        });
+
+        // This is just to make sure that the fallBackToWorkingCopy option doesn't break anything when there's no working copy.
+        describe('#readdir()', function () {
+            it('should be able to produce a listing of /', function (done) {
+                gitFakeFs.readdir('/', passError(done, function (entries) {
+                    expect(entries, 'to contain', 'stagedFile.txt');
+                    expect(entries, 'to contain', 'foo.txt');
+                    done();
+                }));
+            });
+
+            it('should return an ENOENT error for a path that does not exist in the index', function (done) {
+                gitFakeFs.readdir('/i/do/not/exist', function (err) {
+                    expect(err, 'to be an', Error);
+                    done();
+                });
+            });
+        });
+
+        describe('#readFile()', function () {
+            it('should be able to read /stagedFile.txt', function (done) {
+                gitFakeFs.readFile('/stagedFile.txt', 'utf-8', passError(done, function (contents) {
+                    expect(contents, 'to equal', 'Contents of staged file\n');
+                    done();
+                }));
+            });
+
+            it('should return an ENOENT error for a path that does not exist in the index', function (done) {
+                gitFakeFs.readFile('/i/do/not/exist', function (err) {
+                    expect(err, 'to be an', Error);
+                    done();
+                });
+            });
+        });
+
+        describe('#stat()', function () {
+            it('should report /foo.txt as a file', function (done) {
+                gitFakeFs.stat('/foo.txt', passError(done, function (stats) {
+                    expect(stats.isFile(), 'to equal', true);
+                    done();
+                }));
+            });
+
+            it('should return an ENOENT error for a path that does not exist in either the index or the working copy', function (done) {
+                gitFakeFs.stat('/i/do/not/exist', function (err) {
+                    expect(err, 'to be an', Error);
+                    done();
+                });
+            });
+        });
+
+        describe('#realpath()', function () {
+            it('should work with /', function (done) {
+                gitFakeFs.realpath('/', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/');
+                    done();
+                }));
+            });
+
+            it('should return an ENOENT error for a path that does not exist in the index', function (done) {
+                gitFakeFs.realpath('/i/do/not/exist', function (err) {
+                    expect(err, 'to be an', Error);
+                    done();
+                });
+            });
+        });
+
+    });
+
+    describe('pointed at the index of testRepoWithWorkingCopy with the fallBackToWorkingCopy option set to true', function () {
+        // Use testRepo.git as the .git folder of the test repository that has a working copy. As far as I can tell, a symbolic
+        // link called .git cannot be put under version control, so make sure it exists before starting:
+        try {
+            fs.symlinkSync(pathToTestRepo, Path.resolve(pathToTestRepoWithWorkingCopy, '.git'));
+        } catch (e) {
+            if (e.code !== 'EEXIST') {
+                throw e;
+            }
+        }
+
+        var gitFakeFs;
+        beforeEach(function () {
+            gitFakeFs = new GitFakeFs(pathToTestRepoWithWorkingCopy, {index: true, fallBackToWorkingCopy: true});
+        });
+
+        describe('#readdir()', function () {
+            it('should include untrackedFile.txt and executable.sh (deleted in working copy) in the listing of /', function (done) {
+                gitFakeFs.readdir('/', passError(done, function (entries) {
+                    expect(entries, 'to contain', 'untrackedFile.txt');
+                    expect(entries, 'to contain', 'executable.sh');
+                    done();
+                }));
+            });
+
+            it('should include untrackedFile.txt in the listing of /', function (done) {
+                gitFakeFs.readdir('/', passError(done, function (entries) {
+                    expect(entries, 'to contain', 'untrackedFile.txt');
+                    done();
+                }));
+            });
+
+            it('should be able to read the listing of /untrackedDirectory', function (done) {
+                gitFakeFs.readdir('/untrackedDirectory', passError(done, function (entries) {
+                    expect(entries, 'to contain', 'untrackedFileInUntrackedDirectory.txt');
+                    done();
+                }));
+            });
+
+            it('should return an ENOENT error for a path that does not exist in either the index or the working copy', function (done) {
+                gitFakeFs.readdir('/i/do/not/exist', function (err) {
+                    expect(err, 'to be an', Error);
+                    done();
+                });
+            });
+        });
+
+        describe('#readFile()', function () {
+             it('should return the staged contents of /stagedFile.txt rather than the one in the working copy', function (done) {
+                gitFakeFs.readFile('/stagedFile.txt', 'utf-8', passError(done, function (contents) {
+                    expect(contents, 'to equal', 'Contents of staged file\n');
+                    done();
+                }));
+            });
+
+            it('should be able to read /untrackedFile.txt', function (done) {
+                gitFakeFs.readFile('/untrackedFile.txt', 'utf-8', passError(done, function (contents) {
+                    expect(contents, 'to equal', 'Contents of untracked file\n');
+                    done();
+                }));
+            });
+
+            it('should return an ENOENT error for a path that does not exist in either the index or the working copy', function (done) {
+                gitFakeFs.readFile('/i/do/not/exist', function (err) {
+                    expect(err, 'to be an', Error);
+                    done();
+                });
+            });
+        });
+
+        describe('#stat()', function () {
+            it('should report /untrackedFile.txt as a file', function (done) {
+                gitFakeFs.stat('/untrackedFile.txt', passError(done, function (stats) {
+                    expect(stats.isFile(), 'to equal', true);
+                    done();
+                }));
+            });
+
+            it('should return an ENOENT error for a path that does not exist in either the index or the working copy', function (done) {
+                gitFakeFs.stat('/i/do/not/exist', function (err) {
+                    expect(err, 'to be an', Error);
+                    done();
+                });
+            });
+        });
+
+        describe('#realpath()', function () {
+            it('should report /untrackedFile.txt as a /untrackedFile.txt', function (done) {
+                gitFakeFs.realpath('/untrackedFile.txt', passError(done, function (realpath) {
+                    expect(realpath, 'to equal', '/untrackedFile.txt');
+                    done();
+                }));
+            });
+
+            it('should return an ENOENT error for a path that does not exist in either the index or the working copy', function (done) {
+                gitFakeFs.realpath('/i/do/not/exist', function (err) {
+                    expect(err, 'to be an', Error);
+                    done();
+                });
             });
         });
     });

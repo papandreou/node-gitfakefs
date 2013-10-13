@@ -30,6 +30,14 @@ The staged contents:
 new GitFakeFs('/path/to/repo.git', {ref: 'HEAD', index: true});
 ```
 
+For non-bare repositories you can use the contents of the working copy
+as fallback when a file or directory doesn't exist:
+
+```
+new GitFakeFs('/path/to/repo.git', {ref: 'HEAD', fallBackToWorkingCopy: true});
+new GitFakeFs('/path/to/repo.git', {ref: 'HEAD', index: true, fallBackToWorkingCopy: true});
+```
+
 Finally, you can configure a GitFakeFs instance to only contain the
 files and directories that have changes in the index:
 
