@@ -515,16 +515,16 @@ describe('GitFakeFs', function () {
         });
 
         describe('#readdir()', function () {
-            it('should list the changed entries in the root', function (done) {
-                gitFakeFs.readdir('/', passError(done, function (entries) {
-                    expect(entries, 'to equal', ['another', 'stagedFile.txt', 'subdir']);
+            it('should list the names of the changed entries in the root', function (done) {
+                gitFakeFs.readdir('/', passError(done, function (names) {
+                    expect(names, 'to equal', ['another', 'stagedFile.txt', 'subdir']);
                     done();
                 }));
             });
 
-            it('should list the changed entries in /subdir', function (done) {
-                gitFakeFs.readdir('/subdir', passError(done, function (entries) {
-                    expect(entries, 'to equal', ['stagedFileInSubdir.txt']);
+            it('should list names of the changed entries in /subdir', function (done) {
+                gitFakeFs.readdir('/subdir', passError(done, function (names) {
+                    expect(names, 'to equal', ['stagedFileInSubdir.txt']);
                     done();
                 }));
             });
@@ -618,9 +618,9 @@ describe('GitFakeFs', function () {
         // This is just to make sure that the fallBackToWorkingCopy option doesn't break anything when there's no working copy.
         describe('#readdir()', function () {
             it('should be able to produce a listing of /', function (done) {
-                gitFakeFs.readdir('/', passError(done, function (entries) {
-                    expect(entries, 'to contain', 'stagedFile.txt');
-                    expect(entries, 'to contain', 'foo.txt');
+                gitFakeFs.readdir('/', passError(done, function (names) {
+                    expect(names, 'to contain', 'stagedFile.txt');
+                    expect(names, 'to contain', 'foo.txt');
                     done();
                 }));
             });
@@ -701,23 +701,23 @@ describe('GitFakeFs', function () {
 
         describe('#readdir()', function () {
             it('should include untrackedFile.txt and executable.sh (deleted in working copy) in the listing of /', function (done) {
-                gitFakeFs.readdir('/', passError(done, function (entries) {
-                    expect(entries, 'to contain', 'untrackedFile.txt');
-                    expect(entries, 'to contain', 'executable.sh');
+                gitFakeFs.readdir('/', passError(done, function (names) {
+                    expect(names, 'to contain', 'untrackedFile.txt');
+                    expect(names, 'to contain', 'executable.sh');
                     done();
                 }));
             });
 
             it('should include untrackedFile.txt in the listing of /', function (done) {
-                gitFakeFs.readdir('/', passError(done, function (entries) {
-                    expect(entries, 'to contain', 'untrackedFile.txt');
+                gitFakeFs.readdir('/', passError(done, function (names) {
+                    expect(names, 'to contain', 'untrackedFile.txt');
                     done();
                 }));
             });
 
             it('should be able to read the listing of /untrackedDirectory', function (done) {
-                gitFakeFs.readdir('/untrackedDirectory', passError(done, function (entries) {
-                    expect(entries, 'to contain', 'untrackedFileInUntrackedDirectory.txt');
+                gitFakeFs.readdir('/untrackedDirectory', passError(done, function (names) {
+                    expect(names, 'to contain', 'untrackedFileInUntrackedDirectory.txt');
                     done();
                 }));
             });
