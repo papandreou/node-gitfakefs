@@ -606,4 +606,14 @@ describe('GitFakeFs', function () {
             });
         });
     });
+
+    it('should throw an error with illegal combinations of the ref/index/changesInIndex options', function () {
+        expect(function () {
+            new GitFakeFs(pathToTestRepo, {ref: 'master', index: true});
+        }, 'to throw exception', "GitFakeFs: The 'index' option is only supported when the 'ref' option is 'HEAD'");
+
+        expect(function () {
+            new GitFakeFs(pathToTestRepo, {ref: 'someTag', changesInIndex: true});
+        }, 'to throw exception', "GitFakeFs: The 'changesInIndex' option is only supported when the 'ref' option is 'HEAD'");
+    });
 });

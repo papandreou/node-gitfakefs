@@ -3,7 +3,7 @@ GitFakeFs
 
 Emulate (a so far very small subset of) node.js' `fs` module on top of
 a local git repository. Point GitFakeFs at a git repository, and optionally
-a ref, and it'll give you back an `fs` implementation that gets its
+a branch/tag/commit, and it'll give you back an `fs` implementation that gets its
 data from the repo.
 
 ```javascript
@@ -13,6 +13,28 @@ var GitFakeFs = require('gitfakefs'),
 fs.readFile('/foo.txt', function (err, contents) {
     // Got the contents of /foo.txt
 });
+```
+
+To expose the contents of a branch, tag, or commit, use the 'ref' option:
+
+```javascript
+new GitFakeFs('/path/to/repo.git', {ref: 'HEAD'});
+new GitFakeFs('/path/to/repo.git', {ref: 'branchName'});
+new GitFakeFs('/path/to/repo.git', {ref: 'tagName'});
+new GitFakeFs('/path/to/repo.git', {ref: 'commitId'});
+```
+
+The staged contents:
+
+```
+new GitFakeFs('/path/to/repo.git', {ref: 'HEAD', index: true});
+```
+
+Finally, you can configure a GitFakeFs instance to only contain the
+files and directories that have changes in the index:
+
+```javascript
+new GitFakeFs('/path/to/repo.git', {ref: 'HEAD', changesInIndex: true});
 ```
 
 Supported functions:
