@@ -51,6 +51,7 @@ Supported functions:
  * `readFile`
  * `stat`
  * `lstat`
+ * `realpath`
 
 Installation
 ------------
