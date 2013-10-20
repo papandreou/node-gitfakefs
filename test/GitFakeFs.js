@@ -652,6 +652,13 @@ describe('GitFakeFs', function () {
                     done();
                 });
             });
+
+            it('should be able to read a symbolic link pointed at an untracked file', function (done) {
+                gitFakeFs.readFile('/symlinkToUntrackedFile.txt', 'utf-8', passError(done, function (contents) {
+                    expect(contents, 'to equal', 'Contents of untracked file\n');
+                    done();
+                }));
+            });
         });
 
         describe('#stat()', function () {
@@ -800,21 +807,5 @@ describe('GitFakeFs', function () {
         expect(function () {
             new GitFakeFs(pathToTestRepo, {ref: 'someTag', changesInIndex: true});
         }, 'to throw exception', "GitFakeFs: The 'changesInIndex' option is only supported when the 'ref' option is 'HEAD'");
-    });
-
-    describe('pointed at the index of a test repo with a working copy with the fallBackToWorkingCopy option set to true', function () {
-        var gitFakeFs;
-        beforeEach(function () {
-            gitFakeFs = new GitFakeFs(Path.resolve(__dirname, pathToTestRepoWithWorkingCopy), {fallBackToWorkingCopy: true, index: true, ref: 'HEAD'});
-        });
-
-        describe('#readFile()', function () {
-            it('should be able to read a symbolic link pointed at an untracked file', function (done) {
-                gitFakeFs.readFile('/symlinkToUntrackedFile.txt', 'utf-8', passError(done, function (contents) {
-                    expect(contents, 'to equal', 'Contents of untracked file\n');
-                    done();
-                }));
-            });
-        });
     });
 });
