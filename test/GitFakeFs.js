@@ -676,14 +676,14 @@ describe('GitFakeFs', function () {
                 });
             });
 
-            it.skip('should report /untrackedSymlinkToUntrackedFile.txt as a file', function (done) {
+            it('should report /untrackedSymlinkToUntrackedFile.txt as a file', function (done) {
                 gitFakeFs.stat('/untrackedSymlinkToUntrackedFile.txt', passError(done, function (stats) {
                     expect(stats.isFile(), 'to equal', true);
                     done();
                 }));
             });
 
-            it.skip('should report /untrackedSymlinkToFoo.txt as a file', function (done) {
+            it('should report /untrackedSymlinkToFoo.txt as a file', function (done) {
                 gitFakeFs.stat('/untrackedSymlinkToFoo.txt', passError(done, function (stats) {
                     expect(stats.isFile(), 'to equal', true);
                     done();
@@ -700,26 +700,26 @@ describe('GitFakeFs', function () {
         });
 
         describe('#lstat()', function () {
-            it.skip('should report /untrackedSymlinkToUntrackedFile.txt as a symbolic link', function (done) {
+            it('should report /untrackedSymlinkToUntrackedFile.txt as a symbolic link', function (done) {
                 gitFakeFs.lstat('/untrackedSymlinkToUntrackedFile.txt', passError(done, function (stats) {
                     expect(stats.isFile(), 'to equal', false);
-                    expect(stats.isSymbolicLink(), 'to equal', false);
+                    expect(stats.isSymbolicLink(), 'to equal', true);
                     done();
                 }));
             });
 
-            it.skip('should report /untrackedSymlinkToFoo.txt as a symbolic link', function (done) {
+            it('should report /untrackedSymlinkToFoo.txt as a symbolic link', function (done) {
                 gitFakeFs.lstat('/untrackedSymlinkToFoo.txt', passError(done, function (stats) {
                     expect(stats.isFile(), 'to equal', false);
-                    expect(stats.isSymbolicLink(), 'to equal', false);
+                    expect(stats.isSymbolicLink(), 'to equal', true);
                     done();
                 }));
             });
 
-            it.skip('should report /untrackedSymlinkToNonExistentFile.txt as a symbolic link', function (done) {
+            it('should report /untrackedSymlinkToNonExistentFile.txt as a symbolic link', function (done) {
                 gitFakeFs.lstat('/untrackedSymlinkToNonExistentFile.txt', passError(done, function (stats) {
                     expect(stats.isFile(), 'to equal', false);
-                    expect(stats.isSymbolicLink(), 'to equal', false);
+                    expect(stats.isSymbolicLink(), 'to equal', true);
                     done();
                 }));
             });
