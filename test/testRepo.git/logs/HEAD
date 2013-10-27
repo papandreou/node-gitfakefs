@@ -13,3 +13,5 @@
 6d31fd36ab20d557c00aa042b4eaa6da53809a0e a1410fe23cc0c126d5546a366545a88e1d649759 Andreas Lind Petersen <andreas@one.com> 1380404264 +0200	commit: Added submodule.
 a1410fe23cc0c126d5546a366545a88e1d649759 058213f696179d85f248fe28b1a0dd47c78f51a4 Andreas Lind Petersen <andreas@one.com> 1380489221 +0200	commit: subdir/{ => sub}subdir, added subdir/quux.txt
 058213f696179d85f248fe28b1a0dd47c78f51a4 d35056a9711a2497e8c6a957fa6f0d13cb94f8b1 Andreas Lind Petersen <andreas@one.com> 1380491240 +0200	commit (amend): subdir/{ => sub}subdir, added subdir/quux.txt
+d35056a9711a2497e8c6a957fa6f0d13cb94f8b1 ad5f2e707869edbafecbc946c0c8f7e3b69b2843 Andreas Lind Petersen <andreas@one.com> 1382826859 +0200	commit: Added link to parent directory (outside repo).
+ad5f2e707869edbafecbc946c0c8f7e3b69b2843 35cbbe30ca1266ecc777061b823869a690a2f667 Andreas Lind Petersen <andreas@one.com> 1382826923 +0200	commit (amend): Added symbolic links that point outside the repo.

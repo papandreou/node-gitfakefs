@@ -1,4 +1,4 @@
-subdir/{ => sub}subdir, added subdir/quux.txt
+Added symbolic links that point outside the repo.
 
 # Please enter the commit message for your changes. Lines starting
 # with '#' will be ignored, and an empty message aborts the commit.
@@ -6,8 +6,8 @@ subdir/{ => sub}subdir, added subdir/quux.txt
 # Changes to be committed:
 #   (use "git reset HEAD^1 <file>..." to unstage)
 #
-#	new file:   subdir/quux.txt
-#	renamed:    subdir/subdir/bar.txt -> subdir/subsubdir/bar.txt
+#	new file:   linkToNonExistingFileInParentDirectoryOutsideRepo
+#	new file:   linkToParentDirectoryOutsideRepo
 #
 # Changes not staged for commit:
 #   (use "git add/rm <file>..." to update what will be committed)
@@ -18,5 +18,6 @@ subdir/{ => sub}subdir, added subdir/quux.txt
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
+#	another/
 #	stagedFile.txt
 #	subdir/stagedFileInSubdir.txt
