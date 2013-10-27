@@ -165,19 +165,19 @@ describe('GitFakeFs', function () {
                 });
             });
 
-            it('should throw an OUTSIDEWORKINGCOPY error for /linkToParentDirectoryOutsideRepo', function (done) {
+            it('should throw an OUTSIDETREE error for /linkToParentDirectoryOutsideRepo', function (done) {
                 gitFakeFs.stat('/linkToParentDirectoryOutsideRepo', function (err) {
                     expect(err, 'to be an', Error);
-                    expect(err.name, 'to equal', 'OUTSIDEWORKINGCOPY');
+                    expect(err.name, 'to equal', 'OUTSIDETREE');
                     expect(err.relativeTargetPath, 'to equal', '..');
                     done();
                 });
             });
 
-            it('should throw an OUTSIDEWORKINGCOPY error for /linkToNonExistingFileInParentDirectoryOutsideRepo', function (done) {
+            it('should throw an OUTSIDETREE error for /linkToNonExistingFileInParentDirectoryOutsideRepo', function (done) {
                 gitFakeFs.stat('/linkToNonExistingFileInParentDirectoryOutsideRepo', function (err) {
                     expect(err, 'to be an', Error);
-                    expect(err.name, 'to equal', 'OUTSIDEWORKINGCOPY');
+                    expect(err.name, 'to equal', 'OUTSIDETREE');
                     expect(err.relativeTargetPath, 'to equal', '../iDoNotExist');
                     done();
                 });
@@ -718,19 +718,19 @@ describe('GitFakeFs', function () {
                 });
             });
 
-            it('should throw an OUTSIDEWORKINGCOPY error for /linkToParentDirectoryOutsideRepo', function (done) {
+            it('should throw an OUTSIDETREE error for /linkToParentDirectoryOutsideRepo', function (done) {
                 gitFakeFs.stat('/linkToParentDirectoryOutsideRepo', function (err) {
                     expect(err, 'to be an', Error);
-                    expect(err.name, 'to equal', 'OUTSIDEWORKINGCOPY');
+                    expect(err.name, 'to equal', 'OUTSIDETREE');
                     expect(err.relativeTargetPath, 'to equal', '..');
                     done();
                 });
             });
 
-            it('should throw an OUTSIDEWORKINGCOPY error for /linkToNonExistingFileInParentDirectoryOutsideRepo', function (done) {
+            it('should throw an OUTSIDETREE error for /linkToNonExistingFileInParentDirectoryOutsideRepo', function (done) {
                 gitFakeFs.stat('/linkToNonExistingFileInParentDirectoryOutsideRepo', function (err) {
                     expect(err, 'to be an', Error);
-                    expect(err.name, 'to equal', 'OUTSIDEWORKINGCOPY');
+                    expect(err.name, 'to equal', 'OUTSIDETREE');
                     expect(err.relativeTargetPath, 'to equal', '../iDoNotExist');
                     done();
                 });
