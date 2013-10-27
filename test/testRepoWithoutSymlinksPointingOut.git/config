@@ -1,0 +1,9 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[submodule "node-gitfakefs"]
+	url = git://github.com/papandreou/node-gitfakefs
+[submodule "submodule"]
+	url = git://github.com/papandreou/node-gitfakefs

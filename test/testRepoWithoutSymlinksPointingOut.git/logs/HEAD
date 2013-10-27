@@ -1,0 +1,18 @@
+0000000000000000000000000000000000000000 738876c70f4f5243a6672def4233911678ce38db Andreas Lind Petersen <andreas@one.com> 1378022205 +0200	commit (initial): Checked in foo.txt.
+738876c70f4f5243a6672def4233911678ce38db 5d9bae32852806c8ca833bb5051ccfdc82174893 Andreas Lind Petersen <andreas@one.com> 1378022228 +0200	commit: Updated foo.txt.
+5d9bae32852806c8ca833bb5051ccfdc82174893 9262f7a0ce59b04c885c1b3e6ed2fc59fbcf304e Andreas Lind Petersen <andreas@one.com> 1379367879 +0200	commit: Added bar.txt.
+9262f7a0ce59b04c885c1b3e6ed2fc59fbcf304e 39964ce81b9190c0a813db5e200eaf98818cba64 Andreas Lind Petersen <andreas@one.com> 1379450851 +0200	commit: Added an executable file.
+39964ce81b9190c0a813db5e200eaf98818cba64 39c5c09d660b1bac8eb66898e88f72907ccbb223 Andreas Lind Petersen <andreas@one.com> 1379451468 +0200	commit: Added symlink to foo.txt
+39c5c09d660b1bac8eb66898e88f72907ccbb223 112948d62bc691043859fe909ce430549960bcb1 Andreas Lind Petersen <andreas@one.com> 1379451668 +0200	commit: Added symlink to subdir.
+112948d62bc691043859fe909ce430549960bcb1 019433c0486da194b36a8da59910316ad704accd Andreas Lind Petersen <andreas@one.com> 1379452534 +0200	commit: Added link to executable.sh
+019433c0486da194b36a8da59910316ad704accd 53fe6bbfa6a15f88356aab7bf6240c920604e470 Andreas Lind Petersen <andreas@one.com> 1379484770 +0200	commit: Added symlink to non-existent file.
+53fe6bbfa6a15f88356aab7bf6240c920604e470 37942a0df39065d37f1492455dc3c1c79c2ebf46 Andreas Lind Petersen <andreas@one.com> 1379484911 +0200	commit: Added symlink to symlink to non-existent file.
+37942a0df39065d37f1492455dc3c1c79c2ebf46 91fe03e2a9f37e49ddc0cf1a1fd19ef44d9b7c4b Andreas Lind Petersen <andreas@one.com> 1379541097 +0200	commit: {=> sym}linkToExecutable.sh
+91fe03e2a9f37e49ddc0cf1a1fd19ef44d9b7c4b 54ee4d91ea42c2dff05c09e47782bd5601703eaa Andreas Lind Petersen <andreas@one.com> 1379621735 +0200	commit: Added self-referencing symlink.
+54ee4d91ea42c2dff05c09e47782bd5601703eaa 6d31fd36ab20d557c00aa042b4eaa6da53809a0e Andreas Lind Petersen <andreas@one.com> 1380308555 +0200	commit: Added file staged for deletion.
+6d31fd36ab20d557c00aa042b4eaa6da53809a0e a1410fe23cc0c126d5546a366545a88e1d649759 Andreas Lind Petersen <andreas@one.com> 1380404264 +0200	commit: Added submodule.
+a1410fe23cc0c126d5546a366545a88e1d649759 058213f696179d85f248fe28b1a0dd47c78f51a4 Andreas Lind Petersen <andreas@one.com> 1380489221 +0200	commit: subdir/{ => sub}subdir, added subdir/quux.txt
+058213f696179d85f248fe28b1a0dd47c78f51a4 d35056a9711a2497e8c6a957fa6f0d13cb94f8b1 Andreas Lind Petersen <andreas@one.com> 1380491240 +0200	commit (amend): subdir/{ => sub}subdir, added subdir/quux.txt
+d35056a9711a2497e8c6a957fa6f0d13cb94f8b1 ad5f2e707869edbafecbc946c0c8f7e3b69b2843 Andreas Lind Petersen <andreas@one.com> 1382826859 +0200	commit: Added link to parent directory (outside repo).
+ad5f2e707869edbafecbc946c0c8f7e3b69b2843 35cbbe30ca1266ecc777061b823869a690a2f667 Andreas Lind Petersen <andreas@one.com> 1382826923 +0200	commit (amend): Added symbolic links that point outside the repo.
+35cbbe30ca1266ecc777061b823869a690a2f667 d35056a9711a2497e8c6a957fa6f0d13cb94f8b1 Andreas Lind Petersen <andreas@one.com> 1382886194 +0100	reset: moving to HEAD^
