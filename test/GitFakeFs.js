@@ -96,9 +96,9 @@ describe('GitFakeFs', function () {
             it('should report foo.txt as a 99 byte long file', function (done) {
                 gitFakeFs.stat('/foo.txt', passError(done, function (stats) {
                     expect(stats.size, 'to equal', 99);
-                    expect(stats.isFile(), 'to be', true);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be true');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     expect(stats.mode & 0111, 'to be falsy');
                     done();
                 }));
@@ -107,9 +107,9 @@ describe('GitFakeFs', function () {
             it('should report executable.sh as a 42 byte executable file', function (done) {
                 gitFakeFs.stat('/executable.sh', passError(done, function (stats) {
                     expect(stats.size, 'to equal', 42);
-                    expect(stats.isFile(), 'to be', true);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be true');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     expect(stats.mode & 0111, 'to be truthy');
                     done();
                 }));
@@ -117,9 +117,9 @@ describe('GitFakeFs', function () {
 
             it('should report subdir as a directory', function (done) {
                 gitFakeFs.stat('/subdir', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', true);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be true');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     expect(stats.mode & 0111, 'to be falsy');
                     done();
                 }));
@@ -127,9 +127,9 @@ describe('GitFakeFs', function () {
 
             it('should report symlinkToFoo.txt as a file', function (done) {
                 gitFakeFs.stat('/symlinkToFoo.txt', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', true);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be true');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     expect(stats.mode & 0111, 'to be falsy');
                     done();
                 }));
@@ -137,9 +137,9 @@ describe('GitFakeFs', function () {
 
             it('should report symlinkToSubdir as a directory', function (done) {
                 gitFakeFs.stat('/symlinkToSubdir', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', true);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be true');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     expect(stats.mode & 0111, 'to be falsy');
                     done();
                 }));
@@ -147,9 +147,9 @@ describe('GitFakeFs', function () {
 
             it('should report symlinkToExecutable.sh as an executable file', function (done) {
                 gitFakeFs.stat('/symlinkToExecutable.sh', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', true);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be true');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     expect(stats.mode & 0111, 'to be truthy');
                     done();
                 }));
@@ -188,54 +188,54 @@ describe('GitFakeFs', function () {
             it('should report foo.txt as a 99 byte long file', function (done) {
                 gitFakeFs.lstat('/foo.txt', passError(done, function (stats) {
                     expect(stats.size, 'to equal', 99);
-                    expect(stats.isFile(), 'to be', true);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be true');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     done();
                 }));
             });
 
             it('should report subdir as a directory', function (done) {
                 gitFakeFs.lstat('/subdir', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', true);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be true');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     done();
                 }));
             });
 
             it('should report symlinkToFoo.txt as a symbolic link', function (done) {
                 gitFakeFs.lstat('/symlinkToFoo.txt', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', true);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be true');
                     done();
                 }));
             });
 
             it('should report symlinkToSubdir as a symbolic link', function (done) {
                 gitFakeFs.lstat('/symlinkToSubdir', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', true);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be true');
                     done();
                 }));
             });
 
             it('should report symlinkToExecutable.sh as a symbolic link', function (done) {
                 gitFakeFs.lstat('/symlinkToExecutable.sh', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', true);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be true');
                     done();
                 }));
             });
 
             it('should report symlinkToSelf as a symbolic link', function (done) {
                 gitFakeFs.lstat('/symlinkToSelf', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', true);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be true');
                     expect(stats.mode & 0111, 'to be falsy');
                     done();
                 }));
@@ -352,9 +352,9 @@ describe('GitFakeFs', function () {
             it('should report foo.txt as a 99 byte long file', function (done) {
                 gitFakeFs.stat('/foo.txt', passError(done, function (stats) {
                     expect(stats.size, 'to equal', 99);
-                    expect(stats.isFile(), 'to be', true);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be true');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     expect(stats.mode & 0111, 'to be falsy');
                     done();
                 }));
@@ -363,9 +363,9 @@ describe('GitFakeFs', function () {
             it('should report executable.sh as a 42 byte executable file', function (done) {
                 gitFakeFs.stat('/executable.sh', passError(done, function (stats) {
                     expect(stats.size, 'to equal', 42);
-                    expect(stats.isFile(), 'to be', true);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be true');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     expect(stats.mode & 0111, 'to be truthy');
                     done();
                 }));
@@ -373,9 +373,9 @@ describe('GitFakeFs', function () {
 
             it('should report subdir as a directory', function (done) {
                 gitFakeFs.stat('/subdir', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', true);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be true');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     expect(stats.mode & 0111, 'to be falsy');
                     done();
                 }));
@@ -383,9 +383,9 @@ describe('GitFakeFs', function () {
 
             it('should report symlinkToFoo.txt as a file', function (done) {
                 gitFakeFs.stat('/symlinkToFoo.txt', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', true);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be true');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     expect(stats.mode & 0111, 'to be falsy');
                     done();
                 }));
@@ -393,9 +393,9 @@ describe('GitFakeFs', function () {
 
             it('should report symlinkToSubdir as a directory', function (done) {
                 gitFakeFs.stat('/symlinkToSubdir', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', true);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be true');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     expect(stats.mode & 0111, 'to be falsy');
                     done();
                 }));
@@ -403,9 +403,9 @@ describe('GitFakeFs', function () {
 
             it('should report symlinkToExecutable.sh as an executable file', function (done) {
                 gitFakeFs.stat('/symlinkToExecutable.sh', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', true);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be true');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     expect(stats.mode & 0111, 'to be truthy');
                     done();
                 }));
@@ -426,54 +426,54 @@ describe('GitFakeFs', function () {
             it('should report foo.txt as a 99 byte long file', function (done) {
                 gitFakeFs.lstat('/foo.txt', passError(done, function (stats) {
                     expect(stats.size, 'to equal', 99);
-                    expect(stats.isFile(), 'to be', true);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be true');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     done();
                 }));
             });
 
             it('should report subdir as a directory', function (done) {
                 gitFakeFs.lstat('/subdir', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', true);
-                    expect(stats.isSymbolicLink(), 'to be', false);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be true');
+                    expect(stats.isSymbolicLink(), 'to be false');
                     done();
                 }));
             });
 
             it('should report symlinkToFoo.txt as a symbolic link', function (done) {
                 gitFakeFs.lstat('/symlinkToFoo.txt', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', true);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be true');
                     done();
                 }));
             });
 
             it('should report symlinkToSubdir as a symbolic link', function (done) {
                 gitFakeFs.lstat('/symlinkToSubdir', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', true);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be true');
                     done();
                 }));
             });
 
             it('should report symlinkToExecutable.sh as a symbolic link', function (done) {
                 gitFakeFs.lstat('/symlinkToExecutable.sh', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', true);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be true');
                     done();
                 }));
             });
 
             it('should report symlinkToSelf as a symbolic link', function (done) {
                 gitFakeFs.lstat('/symlinkToSelf', passError(done, function (stats) {
-                    expect(stats.isFile(), 'to be', false);
-                    expect(stats.isDirectory(), 'to be', false);
-                    expect(stats.isSymbolicLink(), 'to be', true);
+                    expect(stats.isFile(), 'to be false');
+                    expect(stats.isDirectory(), 'to be false');
+                    expect(stats.isSymbolicLink(), 'to be true');
                     expect(stats.mode & 0111, 'to be falsy');
                     done();
                 }));
