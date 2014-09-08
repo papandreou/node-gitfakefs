@@ -3,7 +3,7 @@ var expect = require('unexpected'),
     Path = require('path'),
     fs = require('fs'),
     GitIndexEntry = require('../lib/GitIndexEntry'),
-    nodeGit = require('nodegit-papandreou');
+    nodeGit = require('nodegit');
 
 describe('GitIndexEntry', function () {
     var pathToTestRepo = Path.resolve(__dirname, 'testRepo.git');
