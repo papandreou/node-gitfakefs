@@ -4,10 +4,10 @@
   "description": "Emulate node.js' fs module on top of a git repository",
   "main": "lib/GitFakeFs.js",
   "devDependencies": {
-    "mocha": "=1.13.0",
-    "sinon": "=1.7.3",
-    "unexpected": "=1.0.4",
-    "unexpected-sinon": "=0.1.0"
+    "mocha": "1.13.0",
+    "sinon": "1.7.3",
+    "unexpected": "1.0.4",
+    "unexpected-sinon": "0.1.0"
   },
   "directories": {
     "test": "test"
@@ -26,12 +26,12 @@
   "author": "Andreas Lind Petersen <andreas@one.com>",
   "license": "BSD",
   "dependencies": {
-    "async": "=0.2.9",
-    "createerror": "=0.4.1",
+    "async": "0.2.9",
+    "createerror": "0.4.1",
     "memoizeasync": "0.9.0",
-    "ncp": "=0.4.2",
-    "nodegit": "=0.1.4",
+    "ncp": "0.4.2",
+    "nodegit": "0.1.4",
     "passerror": "0.0.2",
-    "underscore": "=1.5.2"
+    "underscore": "1.5.2"
   }
 }
